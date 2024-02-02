@@ -1,10 +1,11 @@
 import Product from "../domain/Product";
 import ProductRepository from "../domain/ProductRepository";
+import { ObjectId } from "mongodb";
 
 export default class GetByIdProductUseCase {
     constructor(readonly productRepository: ProductRepository) { }
     async run(
-        id: number,
+        id: ObjectId,
     ): Promise<Product | null> {
         try {
             const product = await this.productRepository.getById(id);

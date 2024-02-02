@@ -1,10 +1,10 @@
-import { Response } from "express";
+import { Request, Response } from "express";
 import GetAllProductsUseCase from "../../application/GetAllProductsUseCase";
 
 export default class GetAllProductsController {
     constructor(readonly getAllProductsController: GetAllProductsUseCase) { }
 
-    async run(res: Response) {
+    async run(req:Request, res: Response) {
         try {
             const product = await this.getAllProductsController.run();
             if (product) {

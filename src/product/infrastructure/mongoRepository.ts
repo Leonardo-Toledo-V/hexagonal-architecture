@@ -28,7 +28,7 @@ class MongoDBProductRepository implements ProductRepository {
         }
     }
 
-    async getById(id: number): Promise<Product | null> {
+    async getById(id: ObjectId): Promise<Product | null> {
         try {
             const productsCollection = getCollection<WithId<Product>>(this.collectionName);
     
@@ -54,7 +54,7 @@ class MongoDBProductRepository implements ProductRepository {
         }
     }
 
-    async update(id: number, updates: Partial<Product>): Promise<Product | null> {
+    async update(id: ObjectId, updates: Partial<Product>): Promise<Product | null> {
         try {
             const productsCollection = getCollection<Product>(this.collectionName);
     
@@ -80,7 +80,7 @@ class MongoDBProductRepository implements ProductRepository {
     
     
 
-    async delete(id: number): Promise<boolean | null> {
+    async delete(id: ObjectId): Promise<boolean | null> {
         try {
             const productsCollection = getCollection<Product>(this.collectionName);
 
