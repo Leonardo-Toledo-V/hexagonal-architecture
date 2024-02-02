@@ -1,15 +1,14 @@
-import Product from "../domain/Product";
-import ProductRepository from "../domain/ProductRepository";
-import { ObjectId } from "mongodb";
+import Product from "../../domain/entities/Product";
+import ProductRepository from "../../domain/ProductRepository";;
 
 export default class UpdateProductUseCase {
     constructor(readonly productRepository: ProductRepository) { }
     async run(
-        id: ObjectId,
+        _id: number,
         updates: Partial<Product>
     ): Promise<Product | null> {
         try {
-            const product = await this.productRepository.update(id, updates);
+            const product = await this.productRepository.update(_id, updates);
             return product
         } catch (error) {
             return null

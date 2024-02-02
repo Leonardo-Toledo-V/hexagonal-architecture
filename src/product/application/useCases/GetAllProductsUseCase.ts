@@ -1,5 +1,5 @@
-import Product from "../domain/Product";
-import ProductRepository from "../domain/ProductRepository";
+import Product from "../../domain/entities/Product";
+import ProductRepository from "../../domain/ProductRepository";
 
 export default class GetAllProductsUseCase {
     constructor(readonly productRepository: ProductRepository) { }

@@ -1,7 +1,7 @@
-import { connectToDatabase, getCollection } from "../../database/mongo";
-import { WithId, ObjectId } from "mongodb"; 
-import Product from "../domain/Product";
-import ProductRepository from "../domain/ProductRepository";
+import { connectToDatabase, getCollection } from "../../../database/mongo";
+import { WithId } from "mongodb"; 
+import Product from "../../domain/entities/Product";
+import ProductRepository from "../../domain/ProductRepository";
 
 class MongoDBProductRepository implements ProductRepository {
     private collectionName: string = "products";
@@ -10,29 +10,28 @@ class MongoDBProductRepository implements ProductRepository {
         connectToDatabase();
     }
 
-    async create(name: string, price: number, details: string): Promise<Product | null> {
+    async create(product:Product): Promise<Product | null> {
         try {
+
             const productsCollection = getCollection<Product>(this.collectionName);
     
-            const result = await productsCollection.insertOne({
-                _id: new ObjectId(),
-                name,
-                price,
-                details
-            });
+            const result = await productsCollection.insertOne(product);
     
-            return new Product(result.insertedId as ObjectId, name, price, details);
+            product._id = result.insertedId;
+
+            return product;
+
         } catch (error) {
             console.error(error);
             return null;
         }
     }
 
-    async getById(id: ObjectId): Promise<Product | null> {
+    async getById(_id: number): Promise<Product | null> {
         try {
             const productsCollection = getCollection<WithId<Product>>(this.collectionName);
     
-            const product = await productsCollection.findOne({ id });
+            const product = await productsCollection.findOne({ _id });
     
             return product ? new Product(product._id, product.name, product.price, product.details) : null;
         } catch (error) {
@@ -54,12 +53,12 @@ class MongoDBProductRepository implements ProductRepository {
         }
     }
 
-    async update(id: ObjectId, updates: Partial<Product>): Promise<Product | null> {
+    async update(_id: number, updates: Partial<Product>): Promise<Product | null> {
         try {
             const productsCollection = getCollection<Product>(this.collectionName);
     
             const result = await productsCollection.findOneAndUpdate(
-                { id },
+                { _id },
                 { $set: updates },
                 { returnDocument: "after" }
             );
@@ -80,11 +79,11 @@ class MongoDBProductRepository implements ProductRepository {
     
     
 
-    async delete(id: ObjectId): Promise<boolean | null> {
+    async delete(_id: number): Promise<boolean | null> {
         try {
             const productsCollection = getCollection<Product>(this.collectionName);
 
-            const result = await productsCollection.deleteOne({ id });
+            const result = await productsCollection.deleteOne({ _id });
 
             return result.deletedCount !== 0;
         } catch (error) {

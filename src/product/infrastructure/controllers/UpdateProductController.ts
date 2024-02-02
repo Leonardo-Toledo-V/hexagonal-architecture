@@ -1,16 +1,15 @@
 import { Request, Response } from "express";
-import UpdateProductUseCase from "../../application/UpdateProductUseCase";
+import UpdateProductUseCase from "../../application/useCases/UpdateProductUseCase";
 import { ObjectId } from "mongodb";
 
 export default class UpdateProductController {
     constructor(readonly updateProductUseCase: UpdateProductUseCase) { }
 
     async run(req: Request, res: Response) {
-        const id = req.params.id
-        const objectId = new ObjectId(id);
+        const _id = parseInt(req.params.id);
         const data = req.body;
         try {
-            const product = await this.updateProductUseCase.run(objectId, data);
+            const product = await this.updateProductUseCase.run(_id, data);
             if (product) {
                 res.status(200).json({
                     data: {

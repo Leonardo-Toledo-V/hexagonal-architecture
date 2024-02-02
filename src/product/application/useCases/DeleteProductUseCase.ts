@@ -1,14 +1,13 @@
-import Product from "../domain/Product";
-import ProductRepository from "../domain/ProductRepository";
-import { ObjectId } from "mongodb";
+import Product from "../../domain/entities/Product";
+import ProductRepository from "../../domain/ProductRepository";
 
 export default class DeleteProductUseCase {
     constructor(readonly productRepository: ProductRepository) { }
     async run(
-        id: ObjectId
+        _id: number
     ): Promise<boolean | null> {
         try {
-            const product = await this.productRepository.delete(id);
+            const product = await this.productRepository.delete(_id);
             return product
         } catch (error) {
             return null

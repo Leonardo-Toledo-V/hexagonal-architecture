@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import CreateProductUseCase from "../../application/CreateProductUseCase";
+import CreateProductUseCase from "../../application/useCases/CreateProductUseCase";
 
 export default class CreateProductController {
     constructor(readonly createProductUseCase: CreateProductUseCase) { }
@@ -12,11 +12,11 @@ export default class CreateProductController {
             });
         }
         try {
-            const product = await this.createProductUseCase.run(data.name, data.price, data.details);
+            const product = await this.createProductUseCase.run(data.id, data.name, data.price, data.details);
             if (product) {
                 res.status(200).json({
                     data: {
-                        id: product._id,
+                        _id: product._id,
                         name: product.name,
                         price: product.price,
                         details: product.details,

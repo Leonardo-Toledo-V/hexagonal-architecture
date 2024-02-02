@@ -5,7 +5,7 @@ import {
     getAllProductsController,
     getByIdProductController,
     updateProductController
-} from "./dependencies";
+} from "../dependencies";
 
 const productRouter = express.Router();
 

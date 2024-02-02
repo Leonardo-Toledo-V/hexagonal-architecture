@@ -1,19 +1,17 @@
 import { Request, Response } from "express";
-import GetByIdProductUseCase from "../../application/GetByIdProductUseCase";
-import { ObjectId } from "mongodb";
+import GetByIdProductUseCase from "../../application/useCases/GetByIdProductUseCase";
 
 export default class GetByIdProductController {
     constructor(readonly getByIdProductUseCase: GetByIdProductUseCase){}
 
     async run(req: Request, res: Response){
-        const id = req.params.id
-        const objectId = new ObjectId(id);
+        const _id = parseInt(req.params.id)
         try {
-            const product = await this.getByIdProductUseCase.run(objectId);
+            const product = await this.getByIdProductUseCase.run(_id);
             if(product){
                 res.status(200).json({
                     data:{
-                        id: product._id,
+                        _id: product._id,
                         name: product.name,
                         price: product.price,
                         details: product.details

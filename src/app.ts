@@ -1,6 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
-import productRouter from "./product/infrastructure/ProductRouter";
+import productRouter from "./product/infrastructure/routes/ProductRouter";
 
 dotenv.config();
 

@@ -1,10 +1,10 @@
 import { ObjectId } from "mongodb";
-import Product from "./Product";
+import Product from "./entities/Product";
 
 export default interface ProductRepository {
-    create(name: string, price: number, details: string): Promise<Product | null>;
-    getById(id: ObjectId): Promise<Product | null>;
+    create(product:Product): Promise<Product | null>;
+    getById(_id: number): Promise<Product | null>;
     getAll(): Promise<Product[] | null>;
-    update(id: ObjectId, updates: Partial<Product>): Promise<Product | null>;
-    delete(id: ObjectId): Promise<boolean | null>;
+    update(_id: number, updates: Partial<Product>): Promise<Product | null>;
+    delete(_id: number): Promise<boolean | null>;
 }

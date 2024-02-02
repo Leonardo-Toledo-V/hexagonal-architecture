@@ -1,15 +1,12 @@
 import { Request, Response } from "express";
-import DeleteProductUseCase from "../../application/DeleteProductUseCase";
-import { ObjectId } from "mongodb";
+import DeleteProductUseCase from "../../application/useCases/DeleteProductUseCase";
 
 export default class DeleteProductController {
     constructor(readonly deleteProductUseCase: DeleteProductUseCase){}
     async run(req: Request, res: Response){
-        const id = req.params.id
-        const objectId = new ObjectId(id);
-
+        const _id = parseInt(req.params.id);
         try {
-            const product = await this.deleteProductUseCase.run(objectId);
+            const product = await this.deleteProductUseCase.run(_id);
             if(product){
                 res.status(200).json({
                     data:{
