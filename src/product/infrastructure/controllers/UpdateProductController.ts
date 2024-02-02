@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import UpdateProductUseCase from "../../application/UpdateProductUseCase";
 
-export default class CreateProductController {
+export default class UpdateProductController {
     constructor(readonly updateProductUseCase: UpdateProductUseCase) { }
 
     async run(req: Request, res: Response) {
@@ -12,7 +12,7 @@ export default class CreateProductController {
             if (product) {
                 res.status(200).json({
                     data: {
-                        id: product.id,
+                        id: product._id,
                         name: product.name,
                         price: product.price,
                         details: product.details,

@@ -11,7 +11,7 @@ export default class GetByIdProductController {
             if(product){
                 res.status(200).json({
                     data:{
-                        id: product.id,
+                        id: product._id,
                         name: product.name,
                         price: product.price,
                         details: product.details

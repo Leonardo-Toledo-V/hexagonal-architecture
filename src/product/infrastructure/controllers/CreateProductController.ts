@@ -6,12 +6,17 @@ export default class CreateProductController {
 
     async run(req: Request, res: Response) {
         const data = req.body;
+        if (!data.name || !data.price || !data.details) {
+            return res.status(400).json({
+                error: "Please provide name, price, and details for the product.",
+            });
+        }
         try {
             const product = await this.createProductUseCase.run(data.name, data.price, data.details);
             if (product) {
                 res.status(200).json({
                     data: {
-                        id: product.id,
+                        id: product._id,
                         name: product.name,
                         price: product.price,
                         details: product.details,
