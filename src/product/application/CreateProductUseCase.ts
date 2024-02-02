@@ -1,7 +1,7 @@
 import Product from "../domain/Product";
 import ProductRepository from "../domain/ProductRepository";
 
-export default class RegisterUseCase {
+export default class CreateProductUseCase {
     constructor(readonly productRepository: ProductRepository) { }
     async run(
         name: string,
@@ -10,9 +10,9 @@ export default class RegisterUseCase {
     ): Promise<Product | null> {
         try {
             const product = await this.productRepository.create(name, price, details);
-            return product;
+            return product
         } catch (error) {
-            return null;
+            return null
         }
     }
 }
