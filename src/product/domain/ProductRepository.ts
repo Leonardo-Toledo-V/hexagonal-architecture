@@ -1,4 +1,3 @@
-import { ObjectId } from "mongodb";
 import Product from "./entities/Product";
 
 export default interface ProductRepository {
